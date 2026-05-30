@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌲 溪頭森林慢活之旅 3天2夜</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: {
+              50:  '#f3f7f0',
+              100: '#e4eedf',
+              200: '#c6ddb9',
+              300: '#9dc48b',
+              400: '#72a85e',
+              500: '#4f8a3e',
+              600: '#3a6e2d',
+              700: '#2e5724',
+              800: '#26461e',
+              900: '#1e381a',
+            },
+            cream: '#faf6ef',
+            warm:  '#f5ede0',
+            wood:  '#c4976a',
+            amber: '#e8a020',
+            coral: '#e07040',
+          },
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    body { background-color: #faf6ef; }
+
+    /* ── Timeline ── */
+    .timeline-line {
+      position: absolute;
+      left: 1.75rem;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #4f8a3e55, #c4976a55);
+    }
+    .timeline-dot {
+      position: absolute;
+      left: 1.25rem;
+      width: 1rem; height: 1rem;
+      border-radius: 9999px;
+      background: #4f8a3e;
+      border: 3px solid #faf6ef;
+      box-shadow: 0 0 0 2px #4f8a3e;
+      z-index: 10;
+    }
+
+    /* ── Tab active ── */
+    .tab-btn.active {
+      background-color: #2e5724;
+      color: #faf6ef;
+      box-shadow: 0 4px 12px #2e572440;
+    }
+    .tab-btn { transition: all .25s; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ── Cards ── */
+    .card-hover { transition: transform .2s, box-shadow .2s; }
+    .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 24px #2e572420; }
+
+    /* ── Badge ── */
+    .badge-orange { background:#fff3e0; color:#bf5000; border:1px solid #ffcc80; }
+    .badge-gold   { background:#fffde7; color:#8a6300; border:1px solid #ffe57f; }
+    .badge-green  { background:#e8f5e9; color:#2e5724; border:1px solid #a5d6a7; }
+    .badge-blue   { background:#e3f2fd; color:#1a5276; border:1px solid #90caf9; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f3f7f0; }
+    ::-webkit-scrollbar-thumb { background: #9dc48b; border-radius: 3px; }
+
+    /* ── Sticky tab bar on mobile ── */
+    @media (max-width: 640px) {
+      #tab-bar { position: sticky; top: 0; z-index: 50; }
+    }
+
+    /* image placeholder shimmer */
+    .img-placeholder {
+      background: linear-gradient(135deg, #c6ddb9 0%, #e4eedf 50%, #c6ddb9 100%);
+      background-size: 200% 200%;
+      animation: shimmer 2s infinite;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body class="font-sans text-forest-900 min-h-screen">
+
+<!-- ══════════════════════════════════════════
+     HERO HEADER
+══════════════════════════════════════════ -->
+<header class="relative overflow-hidden bg-forest-800 text-cream">
+  <!-- background image -->
+  <div class="absolute inset-0">
+    <img
+      src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&auto=format&fit=crop&q=80"
+      alt="溪頭森林"
+      class="w-full h-full object-cover opacity-30"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-forest-900/60 via-forest-800/50 to-forest-900/80"></div>
+  </div>
+
+  <div class="relative z-10 max-w-3xl mx-auto px-5 py-12 text-center">
+    <div class="inline-flex items-center gap-2 bg-forest-600/40 backdrop-blur-sm border border-forest-400/30 rounded-full px-4 py-1.5 text-sm mb-5 text-forest-100">
+      <i class="fa-solid fa-leaf text-forest-300"></i>
+      三代同堂慢活之旅
+    </div>
+    <h1 class="text-4xl sm:text-5xl font-black leading-tight tracking-tight mb-3">
+      🌲 溪頭森林<br class="sm:hidden"/>慢活之旅
+    </h1>
+    <p class="text-xl sm:text-2xl font-medium text-forest-200 mb-6">3天2夜行程表</p>
+    <div class="flex flex-wrap justify-center gap-3 text-base sm:text-lg font-medium">
+      <span class="bg-forest-600/40 backdrop-blur-sm rounded-full px-4 py-1.5 flex items-center gap-2">
+        <i class="fa-regular fa-calendar text-amber"></i>
+        2026.06.02 – 06.04
+      </span>
+      <span class="bg-forest-600/40 backdrop-blur-sm rounded-full px-4 py-1.5 flex items-center gap-2">
+        <i class="fa-solid fa-wind text-forest-300"></i>
+        芬多精假期
+      </span>
+    </div>
+
+    <!-- member chips -->
+    <div class="flex flex-wrap justify-center gap-2 mt-5">
+      <span class="bg-amber/20 border border-amber/40 text-amber rounded-full px-3 py-1 text-sm font-medium">
+        <i class="fa-solid fa-users mr-1"></i>6 位大人（含長輩）
+      </span>
+      <span class="bg-coral/20 border border-coral/40 text-red-200 rounded-full px-3 py-1 text-sm font-medium">
+        <i class="fa-solid fa-baby mr-1"></i>1 位一歲寶貝
+      </span>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════
+     行前重要備忘
+══════════════════════════════════════════ -->
+<section class="max-w-3xl mx-auto px-4 py-8">
+  <h2 class="text-2xl sm:text-3xl font-bold text-forest-800 flex items-center gap-2 mb-5">
+    <span class="w-9 h-9 rounded-full bg-forest-600 text-white flex items-center justify-center text-base">
+      <i class="fa-solid fa-thumbtack"></i>
+    </span>
+    行前重要備忘
+  </h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <!-- 成員 -->
+    <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm flex gap-4">
+      <div class="w-12 h-12 rounded-xl bg-forest-100 flex items-center justify-center text-forest-600 text-xl flex-shrink-0">
+        <i class="fa-solid fa-people-group"></i>
+      </div>
+      <div>
+        <p class="font-bold text-forest-800 text-lg mb-1">出遊成員</p>
+        <p class="text-forest-700 leading-relaxed">6 位大人（含長輩）＋ 1 位一歲幼童</p>
+      </div>
+    </div>
+
+    <!-- 交通 -->
+    <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm flex gap-4">
+      <div class="w-12 h-12 rounded-xl bg-amber/20 flex items-center justify-center text-amber text-xl flex-shrink-0">
+        <i class="fa-solid fa-car-side"></i>
+      </div>
+      <div>
+        <p class="font-bold text-forest-800 text-lg mb-1">交通方式</p>
+        <p class="text-forest-700 leading-relaxed">台中高鐵站 <strong>12:00</strong> 取車自駕<br/>7／9人座大車，已預裝安全座椅</p>
+      </div>
+    </div>
+
+    <!-- 住宿 -->
+    <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm flex gap-4">
+      <div class="w-12 h-12 rounded-xl bg-forest-100 flex items-center justify-center text-forest-600 text-xl flex-shrink-0">
+        <i class="fa-solid fa-hotel"></i>
+      </div>
+      <div>
+        <p class="font-bold text-forest-800 text-lg mb-1">住宿</p>
+        <p class="text-forest-700 leading-relaxed">妖怪村主題飯店<br/><span class="font-semibold text-forest-600">明山森林會館</span><br/>含早餐，不含晚餐</p>
+        <span class="inline-block mt-2 badge-orange text-xs font-semibold rounded-full px-2.5 py-0.5">
+          <i class="fa-solid fa-baby mr-1"></i>已預約：床・澡盆・消毒鍋
+        </span>
+      </div>
+    </div>
+
+    <!-- 必帶 -->
+    <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm flex gap-4">
+      <div class="w-12 h-12 rounded-xl bg-coral/20 flex items-center justify-center text-coral text-xl flex-shrink-0">
+        <i class="fa-solid fa-backpack"></i>
+      </div>
+      <div>
+        <p class="font-bold text-forest-800 text-lg mb-1">必帶清單</p>
+        <ul class="text-forest-700 space-y-0.5 text-base">
+          <li><i class="fa-solid fa-check text-forest-400 mr-1.5"></i>薄外套（隨身）</li>
+          <li><i class="fa-solid fa-check text-forest-400 mr-1.5"></i>防蚊液</li>
+          <li><i class="fa-solid fa-check text-forest-400 mr-1.5"></i>折疊傘 ／ 雨具</li>
+          <li><i class="fa-solid fa-check text-forest-400 mr-1.5"></i>輕便推車</li>
+          <li><i class="fa-solid fa-check text-forest-400 mr-1.5"></i>保溫瓶</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     三天行程 TABS
+══════════════════════════════════════════ -->
+<section class="max-w-3xl mx-auto px-4 pb-14">
+  <h2 class="text-2xl sm:text-3xl font-bold text-forest-800 flex items-center gap-2 mb-5">
+    <span class="w-9 h-9 rounded-full bg-forest-600 text-white flex items-center justify-center text-base">
+      <i class="fa-regular fa-calendar-days"></i>
+    </span>
+    三天兩夜詳細行程
+  </h2>
+
+  <!-- Tab Buttons -->
+  <div id="tab-bar" class="bg-cream/90 backdrop-blur-sm pt-2 pb-3 -mx-4 px-4 border-b border-forest-100 mb-6">
+    <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+      <button onclick="switchTab('day1')" id="btn-day1"
+        class="tab-btn active flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-2xl font-bold text-base bg-white text-forest-700 border border-forest-200">
+        <i class="fa-solid fa-1 text-sm"></i>
+        <span>Day 1</span>
+        <span class="hidden sm:inline text-forest-400 font-normal text-sm">6/2 週二</span>
+      </button>
+      <button onclick="switchTab('day2')" id="btn-day2"
+        class="tab-btn flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-2xl font-bold text-base bg-white text-forest-700 border border-forest-200">
+        <i class="fa-solid fa-2 text-sm"></i>
+        <span>Day 2</span>
+        <span class="hidden sm:inline text-forest-400 font-normal text-sm">6/3 週三</span>
+      </button>
+      <button onclick="switchTab('day3')" id="btn-day3"
+        class="tab-btn flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-2xl font-bold text-base bg-white text-forest-700 border border-forest-200">
+        <i class="fa-solid fa-3 text-sm"></i>
+        <span>Day 3</span>
+        <span class="hidden sm:inline text-forest-400 font-normal text-sm">6/4 週四</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ─────────── DAY 1 ─────────── -->
+  <div id="day1" class="tab-content active">
+    <div class="mb-5 bg-forest-700 rounded-2xl p-4 text-cream flex items-center gap-3">
+      <i class="fa-solid fa-sun text-amber text-2xl"></i>
+      <div>
+        <p class="font-black text-xl">Day 1 · 6/2（週二）</p>
+        <p class="text-forest-200 text-base">抵達、甕缸雞美食與日式暮色</p>
+      </div>
+    </div>
+
+    <div class="relative pl-14">
+      <div class="timeline-line"></div>
+
+      <!-- 10:00 集合 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+              <i class="fa-regular fa-clock mr-1"></i>10:00
+            </span>
+            <span class="badge-orange text-sm font-semibold rounded-lg px-2.5 py-1">
+              <i class="fa-solid fa-people-group mr-1"></i>集合
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-800 mb-1">早上集合 — 媽媽家</h3>
+          <p class="text-forest-600 text-base flex items-center gap-2">
+            <i class="fa-solid fa-house-heart text-coral"></i>
+            全員到齊後整裝出發，前往台中高鐵站取車！
+          </p>
+        </div>
+      </div>
+
+      <!-- 12:00 取車 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+              <i class="fa-regular fa-clock mr-1"></i>12:00 – 12:30
+            </span>
+            <span class="badge-green text-sm font-semibold rounded-lg px-2.5 py-1">
+              <i class="fa-solid fa-car mr-1"></i>交通
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-800 mb-1">台中高鐵站取車</h3>
+          <div class="mt-3 rounded-xl badge-orange px-4 py-3 flex gap-2.5">
+            <i class="fa-solid fa-clipboard-list text-coral text-lg flex-shrink-0 mt-0.5"></i>
+            <div>
+              <p class="font-bold text-base mb-0.5 text-coral">負責人筆記</p>
+              <p class="text-forest-800 leading-relaxed">讓長輩與小孩在 2 樓大廳等候，自己前往 1 樓辦取車手續。取車後確認安全座椅安裝無誤。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 13:30 甕缸雞 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl overflow-hidden border border-forest-100 shadow-sm">
+          <!-- 食物圖片 -->
+          <div class="relative h-48 sm:h-56 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop&q=80"
+              alt="台式烤雞美食"
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-forest-900/60 to-transparent"></div>
+            <span class="absolute bottom-3 left-4 text-white font-bold text-lg drop-shadow">🍗 中餐</span>
+          </div>
+          <div class="p-5">
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+                <i class="fa-regular fa-clock mr-1"></i>13:30 – 14:45
+              </span>
+              <span class="badge-gold text-sm font-semibold rounded-lg px-2.5 py-1">
+                <i class="fa-solid fa-utensils mr-1"></i>美食亮點
+              </span>
+            </div>
+            <h3 class="text-xl font-bold text-forest-800 mb-1">鄉村甕缸雞</h3>
+            <p class="text-forest-600 text-base mb-3 flex items-center gap-1.5">
+              <i class="fa-solid fa-location-dot text-coral"></i>
+              南投縣鹿谷鄉中正路二段209號
+            </p>
+            <div class="rounded-xl badge-gold px-4 py-3 flex gap-2.5">
+              <i class="fa-solid fa-star text-amber text-lg flex-shrink-0 mt-0.5"></i>
+              <p class="text-forest-800 leading-relaxed">平日下午人少，方便推車。皮脆多汁，<strong>鮮筍湯可續加</strong>！</p>
+            </div>
+            <div class="mt-3 rounded-xl bg-blue-50 border border-blue-100 px-4 py-3 flex gap-2.5">
+              <i class="fa-solid fa-baby-carriage text-blue-500 text-lg flex-shrink-0 mt-0.5"></i>
+              <p class="text-blue-800 leading-relaxed font-medium">推車友善・空間寬敞</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 15:30 Check-in -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl overflow-hidden border border-forest-100 shadow-sm">
+          <div class="p-5">
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+                <i class="fa-regular fa-clock mr-1"></i>15:30 – 16:30
+              </span>
+              <span class="badge-green text-sm font-semibold rounded-lg px-2.5 py-1">
+                <i class="fa-solid fa-hotel mr-1"></i>住宿
+              </span>
+            </div>
+            <h3 class="text-xl font-bold text-forest-800 mb-1">飯店 Check-in 休息</h3>
+            <p class="text-forest-700 text-base mb-3">明山森林會館 ｜ 妖怪村主題飯店</p>
+            <div class="rounded-xl bg-forest-50 border border-forest-200 px-4 py-3 flex gap-2.5">
+              <i class="fa-solid fa-mug-hot text-wood text-lg flex-shrink-0 mt-0.5"></i>
+              <p class="text-forest-800 leading-relaxed">讓長輩在木屋客廳泡茶休息，小孩在房間充電補眠。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 17:00 妖怪村 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl overflow-hidden border border-forest-100 shadow-sm">
+          <div class="relative h-44 sm:h-52 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&auto=format&fit=crop&q=80"
+              alt="日式燈籠木造建築"
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-forest-900/60 to-transparent"></div>
+            <span class="absolute bottom-3 left-4 text-white font-bold text-lg drop-shadow">🏮 暮色漫步</span>
+          </div>
+          <div class="p-5">
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+                <i class="fa-regular fa-clock mr-1"></i>17:00 – 18:30
+              </span>
+              <span class="badge-gold text-sm font-semibold rounded-lg px-2.5 py-1">
+                <i class="fa-solid fa-camera mr-1"></i>景點
+              </span>
+            </div>
+            <h3 class="text-xl font-bold text-forest-800 mb-2">妖怪村商圈暮色漫步</h3>
+            <div class="rounded-xl badge-orange px-4 py-3 flex gap-2.5 mb-3">
+              <i class="fa-solid fa-baby-carriage text-coral text-lg flex-shrink-0 mt-0.5"></i>
+              <p class="text-forest-800 leading-relaxed font-medium"><strong>全平地推嬰兒車逛街超愜意！</strong>平日遊客稀少，紅燈籠亮起超有氣氛。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 18:30 晚餐 -->
+      <div class="relative mb-2">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+              <i class="fa-regular fa-clock mr-1"></i>18:30 以後
+            </span>
+            <span class="badge-gold text-sm font-semibold rounded-lg px-2.5 py-1">
+              <i class="fa-solid fa-bowl-food mr-1"></i>晚餐
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-800 mb-2">彈性晚餐時間</h3>
+          <ul class="space-y-2 text-forest-700 text-base">
+            <li class="flex items-start gap-2"><i class="fa-solid fa-bowl-rice text-forest-400 mt-1 flex-shrink-0"></i>妖怪村內小吃：拉麵、咬人貓麵包等</li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-fire-burner text-amber mt-1 flex-shrink-0"></i>或現場加購飯店 Buffet 方案</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─────────── DAY 2 ─────────── -->
+  <div id="day2" class="tab-content">
+    <div class="mb-5 bg-forest-700 rounded-2xl p-4 text-cream flex items-center gap-3">
+      <i class="fa-solid fa-tree text-forest-300 text-2xl"></i>
+      <div>
+        <p class="font-black text-xl">Day 2 · 6/3（週三）</p>
+        <p class="text-forest-200 text-base">溪頭核心芬多精、老幼共賞慢活日</p>
+      </div>
+    </div>
+
+    <div class="relative pl-14">
+      <div class="timeline-line"></div>
+
+      <!-- 早餐 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+              <i class="fa-regular fa-clock mr-1"></i>08:30 – 09:40
+            </span>
+            <span class="badge-gold text-sm font-semibold rounded-lg px-2.5 py-1">
+              <i class="fa-solid fa-egg mr-1"></i>早餐
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-800 mb-2">飯店早餐（青山食堂）</h3>
+          <div class="rounded-xl bg-forest-50 border border-forest-200 px-4 py-3 flex gap-2.5">
+            <i class="fa-solid fa-heart text-coral text-lg flex-shrink-0 mt-0.5"></i>
+            <p class="text-forest-800 leading-relaxed">清粥小菜，熱騰騰的早餐最適合長輩與小朋友的腸胃。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 溪頭園區 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl overflow-hidden border border-forest-100 shadow-sm">
+          <div class="relative h-52 sm:h-60 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&auto=format&fit=crop&q=80"
+              alt="森林步道大學池"
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-forest-900/70 to-transparent"></div>
+            <span class="absolute bottom-3 left-4 text-white font-bold text-lg drop-shadow">🌲 溪頭自然教育園區</span>
+          </div>
+          <div class="p-5">
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+                <i class="fa-regular fa-clock mr-1"></i>10:00 – 12:30
+              </span>
+              <span class="badge-green text-sm font-semibold rounded-lg px-2.5 py-1">
+                <i class="fa-solid fa-tree mr-1"></i>核心景點
+              </span>
+            </div>
+            <h3 class="text-xl font-bold text-forest-800 mb-3">溪頭自然教育園區</h3>
+
+            <!-- 無障礙提示 -->
+            <div class="rounded-xl badge-orange px-4 py-3 flex gap-2.5 mb-3">
+              <i class="fa-solid fa-bus text-coral text-xl flex-shrink-0 mt-0.5"></i>
+              <div>
+                <p class="font-bold text-base mb-1 text-coral">♿ 無障礙友善提示</p>
+                <p class="text-forest-800 leading-relaxed">入園後<strong>立即預約電動接駁車</strong>！直接坐到大學池，省下大段上坡路。主幹道為柏油路面，推車輕鬆好走。</p>
+              </div>
+            </div>
+
+            <div class="rounded-xl badge-gold px-4 py-3 flex gap-2.5">
+              <i class="fa-solid fa-camera text-amber text-lg flex-shrink-0 mt-0.5"></i>
+              <p class="text-forest-800 leading-relaxed">必拍：<strong>大學池竹拱橋</strong>、林道散步拍全家福</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 輕食午餐 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+              <i class="fa-regular fa-clock mr-1"></i>12:30 – 13:30
+            </span>
+            <span class="badge-gold text-sm font-semibold rounded-lg px-2.5 py-1">
+              <i class="fa-solid fa-utensils mr-1"></i>午餐
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-800 mb-1">輕食午餐</h3>
+          <p class="text-forest-700 text-base">園區販賣部或飯店周邊用餐，輕鬆不趕行程。</p>
+        </div>
+      </div>
+
+      <!-- 午睡 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+              <i class="fa-regular fa-clock mr-1"></i>13:30 – 15:30
+            </span>
+            <span class="badge-blue text-sm font-semibold rounded-lg px-2.5 py-1">
+              <i class="fa-solid fa-bed mr-1"></i>休息
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-800 mb-2">回飯店午睡・休整</h3>
+          <div class="rounded-xl bg-blue-50 border border-blue-100 px-4 py-3 flex gap-2.5">
+            <i class="fa-solid fa-cloud-rain text-blue-500 text-lg flex-shrink-0 mt-0.5"></i>
+            <p class="text-blue-800 leading-relaxed">山區午後易有雷陣雨，正好避開！長輩與小孩補眠，養足體力迎接傍晚。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 苗圃步道 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+              <i class="fa-regular fa-clock mr-1"></i>15:30 – 17:00
+            </span>
+            <span class="badge-green text-sm font-semibold rounded-lg px-2.5 py-1">
+              <i class="fa-solid fa-person-walking mr-1"></i>散步
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-800 mb-1">苗圃步道散步</h3>
+          <p class="text-forest-600 text-base italic">自由視體力調整，輕鬆慢行即可。</p>
+        </div>
+      </div>
+
+      <!-- 晚餐 -->
+      <div class="relative mb-2">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+              <i class="fa-regular fa-clock mr-1"></i>18:00 以後
+            </span>
+            <span class="badge-gold text-sm font-semibold rounded-lg px-2.5 py-1">
+              <i class="fa-solid fa-house-chimney mr-1"></i>晚餐
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-800 mb-2">溫馨木屋聚會晚餐</h3>
+          <div class="rounded-xl badge-orange px-4 py-3 flex gap-2.5">
+            <i class="fa-solid fa-clipboard-list text-coral text-lg flex-shrink-0 mt-0.5"></i>
+            <div>
+              <p class="font-bold text-base mb-1 text-coral">負責人筆記</p>
+              <p class="text-forest-800 leading-relaxed">開車下山 10 分鐘，外帶<strong>「福伯黃金雞」</strong>或鹿谷熱炒回木屋客廳。全家穿拖鞋輕鬆共食，不用擔心小孩哭鬧影響別人！</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─────────── DAY 3 ─────────── -->
+  <div id="day3" class="tab-content">
+    <div class="mb-5 bg-forest-700 rounded-2xl p-4 text-cream flex items-center gap-3">
+      <i class="fa-solid fa-road text-amber text-2xl"></i>
+      <div>
+        <p class="font-black text-xl">Day 3 · 6/4（週四）</p>
+        <p class="text-forest-200 text-base">茶園開闊景觀、愉快回程</p>
+      </div>
+    </div>
+
+    <div class="relative pl-14">
+      <div class="timeline-line"></div>
+
+      <!-- 早餐 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+              <i class="fa-regular fa-clock mr-1"></i>09:00 – 10:00
+            </span>
+            <span class="badge-gold text-sm font-semibold rounded-lg px-2.5 py-1">
+              <i class="fa-solid fa-egg mr-1"></i>早餐
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-800 mb-2">飯店早餐 ＆ 慢活收拾</h3>
+          <div class="rounded-xl badge-gold px-4 py-3 flex gap-2.5">
+            <i class="fa-solid fa-camera text-amber text-lg flex-shrink-0 mt-0.5"></i>
+            <p class="text-forest-800 leading-relaxed">退房前記得在<strong>森林木屋區</strong>拍攝全家福大合照，留下美好回憶！</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 茶園 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl overflow-hidden border border-forest-100 shadow-sm">
+          <div class="relative h-52 sm:h-60 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&auto=format&fit=crop&q=80"
+              alt="台灣高山茶園景觀"
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-forest-900/70 to-transparent"></div>
+            <span class="absolute bottom-3 left-4 text-white font-bold text-lg drop-shadow">⛰️ 茶園巡禮</span>
+          </div>
+          <div class="p-5">
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+                <i class="fa-regular fa-clock mr-1"></i>11:00 – 12:15
+              </span>
+              <span class="badge-green text-sm font-semibold rounded-lg px-2.5 py-1">
+                <i class="fa-solid fa-mountain mr-1"></i>景點
+              </span>
+            </div>
+            <h3 class="text-xl font-bold text-forest-800 mb-2">小半天石馬公園 ／ 茶園巡禮</h3>
+            <div class="rounded-xl badge-gold px-4 py-3 flex gap-2.5">
+              <i class="fa-solid fa-eye text-amber text-lg flex-shrink-0 mt-0.5"></i>
+              <p class="text-forest-800 leading-relaxed">地勢開闊平坦，可遠眺整片<strong>綠油油茶園</strong>，長輩視覺最舒壓！</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 午餐 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+              <i class="fa-regular fa-clock mr-1"></i>12:30 – 14:00
+            </span>
+            <span class="badge-gold text-sm font-semibold rounded-lg px-2.5 py-1">
+              <i class="fa-solid fa-leaf mr-1"></i>午餐
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-800 mb-2">在地景觀茶餐廳午餐</h3>
+          <div class="rounded-xl bg-forest-50 border border-forest-200 px-4 py-3 flex gap-2.5">
+            <i class="fa-solid fa-mug-saucer text-wood text-lg flex-shrink-0 mt-0.5"></i>
+            <p class="text-forest-800 leading-relaxed">找間能看風景的餐館，享受最後一頓<strong>在地山產料理</strong>，配一杯鹿谷烏龍茶。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 返程 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+              <i class="fa-regular fa-clock mr-1"></i>14:00 – 15:30
+            </span>
+            <span class="badge-green text-sm font-semibold rounded-lg px-2.5 py-1">
+              <i class="fa-solid fa-car mr-1"></i>交通
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-800 mb-1">開車返回台中高鐵站</h3>
+          <p class="text-forest-600 text-base flex items-center gap-2">
+            <i class="fa-solid fa-baby text-amber"></i>
+            小孩可在車上睡午覺，一路好眠回台中！
+          </p>
+        </div>
+      </div>
+
+      <!-- 還車 -->
+      <div class="relative mb-8">
+        <div class="timeline-dot" style="top:1.1rem"></div>
+        <div class="card-hover bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="bg-forest-600 text-white text-sm font-bold rounded-lg px-3 py-1">
+              <i class="fa-regular fa-clock mr-1"></i>15:30 – 16:15
+            </span>
+            <span class="badge-orange text-sm font-semibold rounded-lg px-2.5 py-1">
+              <i class="fa-solid fa-key mr-1"></i>還車
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-800 mb-2">高鐵站還車</h3>
+          <div class="rounded-xl badge-orange px-4 py-3 flex gap-2.5">
+            <i class="fa-solid fa-triangle-exclamation text-coral text-lg flex-shrink-0 mt-0.5"></i>
+            <p class="text-forest-800 leading-relaxed">預留 <strong>30 分鐘</strong> 進行點交、搬運行李，不慌不忙。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 搭高鐵 -->
+      <div class="relative mb-2">
+        <div class="timeline-dot bg-amber" style="top:1.1rem"></div>
+        <div class="card-hover bg-gradient-to-br from-forest-700 to-forest-800 rounded-2xl p-5 border border-forest-600 shadow-sm text-cream">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="bg-amber text-forest-900 text-sm font-bold rounded-lg px-3 py-1">
+              <i class="fa-regular fa-clock mr-1"></i>16:30 以後
+            </span>
+          </div>
+          <h3 class="text-2xl font-black text-cream mb-1">🚅 搭乘高鐵，平安返家！</h3>
+          <p class="text-forest-200 text-base">帶著滿滿芬多精與溫馨記憶，一起平安回家。</p>
+          <div class="mt-3 flex gap-2 text-2xl">
+            <span>🌲</span><span>👨‍👩‍👧</span><span>👶</span><span>🏡</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer class="bg-forest-800 text-forest-200 text-center py-8 px-4">
+  <p class="text-lg font-bold text-cream mb-1">🌲 溪頭森林慢活之旅</p>
+  <p class="text-base">2026.06.02 – 06.04 ｜ 三代同堂，慢慢走，慢慢愛</p>
+  <p class="text-forest-400 text-sm mt-3">製作於 2026 年 ❤️</p>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     JS – Tab switcher
+══════════════════════════════════════════ -->
+<script>
+  function switchTab(day) {
+    ['day1','day2','day3'].forEach(d => {
+      document.getElementById(d).classList.remove('active');
+      document.getElementById('btn-' + d).classList.remove('active');
+    });
+    document.getElementById(day).classList.add('active');
+    document.getElementById('btn-' + day).classList.add('active');
+    // scroll to top of content smoothly
+    document.getElementById('tab-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+
+</body>
+</html>
